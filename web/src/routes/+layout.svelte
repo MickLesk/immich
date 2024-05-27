@@ -18,6 +18,7 @@
   import { onDestroy, onMount } from 'svelte';
   import '../app.css';
   import { isAssetViewerRoute, isSharedLinkRoute } from '$lib/utils/navigation';
+  import { t } from 'svelte-i18n';
 
   let showNavigationLoadingBar = false;
 
@@ -107,7 +108,7 @@
 <noscript
   class="absolute z-[1000] flex h-screen w-screen place-content-center place-items-center bg-immich-bg dark:bg-immich-dark-bg dark:text-immich-dark-fg"
 >
-  <FullscreenContainer title="Welcome to Immich">
+  <FullscreenContainer title={$t('common.welcome.title')}>
     To use Immich, you must enable JavaScript or use a JavaScript compatible browser.
   </FullscreenContainer>
 </noscript>
