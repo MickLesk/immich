@@ -18,7 +18,7 @@
   import { onDestroy, onMount } from 'svelte';
   import '../app.css';
   import { isAssetViewerRoute, isSharedLinkRoute } from '$lib/utils/navigation';
-  import { t } from 'svelte-i18n';
+  import { t, locale } from 'svelte-i18n';
 
   let showNavigationLoadingBar = false;
 
