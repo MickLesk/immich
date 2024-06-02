@@ -17,6 +17,7 @@
   import { NotificationType, notificationController } from '../shared-components/notification/notification';
   import FaceThumbnail from './face-thumbnail.svelte';
   import PeopleList from './people-list.svelte';
+  import { t } from 'svelte-i18n';
 
   export let person: PersonResponseDto;
   let people: PersonResponseDto[] = [];
@@ -78,7 +79,7 @@
       });
       dispatch('merge', mergedPerson);
     } catch (error) {
-      handleError(error, { $t("cannot_merge_people") });
+      handleError(error, $t('cannot_merge_people'));
     } finally {
       isShowConfirmation = false;
     }
@@ -134,7 +135,7 @@
                 {#if selectedPeople.length === 1}
                   <div class="absolute bottom-2">
                     <CircleIconButton
-                      title={ $t("swap_merge_direction") }
+                      title={$t('swap_merge_direction')}
                       icon={mdiSwapHorizontal}
                       size="24"
                       on:click={handleSwapPeople}
@@ -154,8 +155,8 @@
     {#if isShowConfirmation}
       <ConfirmDialogue
         id="merge-people-modal"
-        title={ $t("merge_people") }
-        confirmText={ $t("merge") }
+        title={$t('merge_people')}
+        confirmText={$t('merge')}
         onConfirm={handleMerge}
         onClose={() => (isShowConfirmation = false)}
       >
