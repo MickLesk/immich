@@ -6,6 +6,7 @@
   import { createEventDispatcher } from 'svelte';
   import { fade } from 'svelte/transition';
   import LoadingSpinner from '../shared-components/loading-spinner.svelte';
+  import { t } from 'svelte-i18n';
 
   export let assetId: string;
   export let loopVideo: boolean;
@@ -31,7 +32,7 @@
       await video.play();
       dispatch('onVideoStarted');
     } catch (error) {
-      handleError(error, 'Unable to play video');
+      handleError(error, $t('unable_to_play_video'));
     } finally {
       isVideoLoading = false;
     }

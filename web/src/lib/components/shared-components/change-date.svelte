@@ -4,6 +4,7 @@
   import ConfirmDialogue from './confirm-dialogue.svelte';
   import Combobox from './combobox.svelte';
   import DateInput from '../elements/date-input.svelte';
+  import { t } from 'svelte-i18n';
 
   export let initialDate: DateTime = DateTime.now();
 
@@ -24,11 +25,11 @@
   };
 
   const timezones: ZoneOption[] = Intl.supportedValuesOf('timeZone').map((zone: string) => ({
-    label: zone + ` (${DateTime.local({ zone }).toFormat('ZZ')})`,
-    value: 'UTC' + DateTime.local({ zone }).toFormat('ZZ'),
+    label: zone + ` (${DateTime.local({ zone }).toFormat($t('zz'))})`,
+    value: $t('utc') + DateTime.local({ zone }).toFormat($t('zz')),
   }));
 
-  const initialOption = timezones.find((item) => item.value === 'UTC' + initialDate.toFormat('ZZ'));
+  const initialOption = timezones.find((item) => item.value === $t('utc') + initialDate.toFormat($t('zz')));
 
   let selectedOption = initialOption && {
     label: initialOption?.label || '',
@@ -58,7 +59,7 @@
 <ConfirmDialogue
   id="edit-date-time-modal"
   confirmColor="primary"
-  title="Edit date and time"
+  title={$t('edit_date_and_time')}
   prompt="Please select a new date:"
   disabled={!date.isValid}
   onConfirm={handleConfirm}
@@ -66,7 +67,7 @@
 >
   <div class="flex flex-col text-md px-4 text-center gap-2" slot="prompt">
     <div class="flex flex-col">
-      <label for="datetime">Date and Time</label>
+      <label for="datetime">{$t('date_and_time')}</label>
       <DateInput
         class="immich-form-input text-sm my-4 w-full"
         id="datetime"
@@ -78,9 +79,9 @@
       <Combobox
         bind:selectedOption
         id="settings-timezone"
-        label="Timezone"
+        label={$t('timezone')}
         options={timezones}
-        placeholder="Search timezone..."
+        placeholder={$t('search_timezone')}
       />
     </div>
   </div>

@@ -15,6 +15,7 @@
   import { findLocale } from '$lib/utils';
   import { onMount } from 'svelte';
   import { fade } from 'svelte/transition';
+  import { t } from 'svelte-i18n';
 
   let time = new Date();
 
@@ -73,7 +74,7 @@
       <div class="ml-4">
         <SettingSwitch
           id="theme-selection"
-          title="Theme selection"
+          title={$t('theme_selection')}
           subtitle="Automatically set the theme to light or dark based on your browser's system preference"
           bind:checked={$colorTheme.system}
           on:toggle={handleToggleColorTheme}
@@ -83,7 +84,7 @@
       <div class="ml-4">
         <SettingSwitch
           id="default-locale"
-          title="Default Locale"
+          title={$t('default_locale')}
           subtitle="Format dates and numbers based on your browser locale"
           checked={$locale == undefined}
           on:toggle={handleToggleLocaleBrowser}
@@ -95,10 +96,10 @@
         <div class="ml-4">
           <SettingCombobox
             id="custom-locale"
-            comboboxPlaceholder="Searching locales..."
+            comboboxPlaceholder={$t('searching_locales')}
             {selectedOption}
             options={getAllLanguages()}
-            title="Custom Locale"
+            title={$t('custom_locale')}
             subtitle="Format dates and numbers based on the language and the region"
             onSelect={(combobox) => handleLocaleChange(combobox?.value)}
           />
@@ -108,7 +109,7 @@
       <div class="ml-4">
         <SettingSwitch
           id="always-load-original-file"
-          title="Display original photos"
+          title={$t('display_original_photos')}
           subtitle="Prefer to display the original photo when viewing an asset rather than thumbnails when the original asset is web-compatible. This may result in slower photo display speeds."
           bind:checked={$alwaysLoadOriginalFile}
           on:toggle={() => ($alwaysLoadOriginalFile = !$alwaysLoadOriginalFile)}
@@ -126,7 +127,7 @@
       <div class="ml-4">
         <SettingSwitch
           id="loop-video"
-          title="Loop videos"
+          title={$t('loop_videos')}
           subtitle="Enable to automatically loop a video in the detail viewer."
           bind:checked={$loopVideo}
           on:toggle={() => ($loopVideo = !$loopVideo)}
@@ -136,7 +137,7 @@
       <div class="ml-4">
         <SettingSwitch
           id="show-delete-warning"
-          title="Permanent deletion warning"
+          title={$t('permanent_deletion_warning')}
           subtitle="Show a warning when permanently deleting assets"
           bind:checked={$showDeleteModal}
         />
@@ -145,7 +146,7 @@
       <div class="ml-4">
         <SettingSwitch
           id="people-sidebar-link"
-          title="People"
+          title={$t('people')}
           subtitle="Display a link to People in the sidebar"
           bind:checked={$sidebarSettings.people}
         />
@@ -153,7 +154,7 @@
       <div class="ml-4">
         <SettingSwitch
           id="sharing-sidebar-link"
-          title="Sharing"
+          title={$t('sharing')}
           subtitle="Display a link to Sharing in the sidebar"
           bind:checked={$sidebarSettings.sharing}
         />

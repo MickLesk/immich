@@ -10,6 +10,7 @@
   import MenuOption from '../../shared-components/context-menu/menu-option.svelte';
   import { getAssetControlContext } from '../asset-select-control-bar.svelte';
   import { s } from '$lib/utils';
+  import { t } from 'svelte-i18n';
 
   export let album: AlbumResponseDto;
   export let onRemove: ((assetIds: string[]) => void) | undefined;
@@ -51,16 +52,24 @@
 </script>
 
 {#if menuItem}
-  <MenuOption text="Remove from album" icon={mdiImageRemoveOutline} on:click={() => (isShowConfirmation = true)} />
+  <MenuOption
+    text={$t('remove_from_album')}
+    icon={mdiImageRemoveOutline}
+    on:click={() => (isShowConfirmation = true)}
+  />
 {:else}
-  <CircleIconButton title="Remove from album" icon={mdiDeleteOutline} on:click={() => (isShowConfirmation = true)} />
+  <CircleIconButton
+    title={$t('remove_from_album')}
+    icon={mdiDeleteOutline}
+    on:click={() => (isShowConfirmation = true)}
+  />
 {/if}
 
 {#if isShowConfirmation}
   <ConfirmDialogue
     id="remove-from-album-modal"
     title="Remove from {album.albumName}"
-    confirmText="Remove"
+    confirmText={$t('remove')}
     onConfirm={removeFromAlbum}
     onClose={() => (isShowConfirmation = false)}
   >

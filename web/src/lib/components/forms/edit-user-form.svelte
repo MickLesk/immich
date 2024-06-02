@@ -9,6 +9,7 @@
   import { mdiAccountEditOutline } from '@mdi/js';
   import { createEventDispatcher } from 'svelte';
   import Button from '../elements/buttons/button.svelte';
+  import { t } from 'svelte-i18n';
 
   export let user: UserAdminResponseDto;
   export let canResetPassword = true;
@@ -18,14 +19,14 @@
   let error: string;
   let success: string;
   let isShowResetPasswordConfirmation = false;
-  let quotaSize = user.quotaSizeInBytes ? convertFromBytes(user.quotaSizeInBytes, 'GiB') : null;
+  let quotaSize = user.quotaSizeInBytes ? convertFromBytes(user.quotaSizeInBytes, $t('gib')) : null;
 
   const previousQutoa = user.quotaSizeInBytes;
 
   $: quotaSizeWarning =
-    previousQutoa !== convertToBytes(Number(quotaSize), 'GiB') &&
+    previousQutoa !== convertToBytes(Number(quotaSize), $t('gib')) &&
     !!quotaSize &&
-    convertToBytes(Number(quotaSize), 'GiB') > $serverInfo.diskSizeRaw;
+    convertToBytes(Number(quotaSize), $t('gib')) > $serverInfo.diskSizeRaw;
 
   const dispatch = createEventDispatcher<{
     close: void;
@@ -42,13 +43,13 @@
           email,
           name,
           storageLabel: storageLabel || '',
-          quotaSizeInBytes: quotaSize ? convertToBytes(Number(quotaSize), 'GiB') : null,
+          quotaSizeInBytes: quotaSize ? convertToBytes(Number(quotaSize), $t('gib')) : null,
         },
       });
 
       dispatch('editSuccess');
     } catch (error) {
-      handleError(error, 'Unable to update user');
+      handleError(error, $t('unable_to_update_user'));
     }
   };
 
@@ -66,7 +67,7 @@
 
       dispatch('resetPasswordSuccess');
     } catch (error) {
-      handleError(error, 'Unable to reset password');
+      handleError(error, $t('unable_to_reset_password'));
     } finally {
       isShowResetPasswordConfirmation = false;
     }
@@ -76,7 +77,8 @@
   function generatePassword(length: number = 16) {
     let generatedPassword = '';
 
-    const characterSet = '0123456789' + 'abcdefghijklmnopqrstuvwxyz' + 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' + ',.-{}+!#$%/()=?';
+    const characterSet =
+      '0123456789' + 'abcdefghijklmnopqrstuvwxyz' + $t('abcdefghijklmnopqrstuvwxyz') + ',.-{}+!#$%/()=?';
 
     for (let i = 0; i < length; i++) {
       let randomNumber = crypto.getRandomValues(new Uint32Array(1))[0];
@@ -90,15 +92,15 @@
   }
 </script>
 
-<FullScreenModal id="edit-user-modal" title="Edit user" icon={mdiAccountEditOutline} {onClose}>
+<FullScreenModal id="edit-user-modal" title={$t('edit_user')} icon={mdiAccountEditOutline} {onClose}>
   <form on:submit|preventDefault={editUser} autocomplete="off" id="edit-user-form">
     <div class="my-4 flex flex-col gap-2">
-      <label class="immich-form-label" for="email">Email</label>
+      <label class="immich-form-label" for="email">{$t('email')}</label>
       <input class="immich-form-input" id="email" name="email" type="email" bind:value={user.email} />
     </div>
 
     <div class="my-4 flex flex-col gap-2">
-      <label class="immich-form-label" for="name">Name</label>
+      <label class="immich-form-label" for="name">{$t('name')}</label>
       <input class="immich-form-input" id="name" name="name" type="text" required bind:value={user.name} />
     </div>
 
@@ -113,7 +115,7 @@
     </div>
 
     <div class="my-4 flex flex-col gap-2">
-      <label class="immich-form-label" for="storage-label">Storage Label</label>
+      <label class="immich-form-label" for="storage-label">{$t('storage_label')}</label>
       <input
         class="immich-form-input"
         id="storage-label"
@@ -141,18 +143,18 @@
   <svelte:fragment slot="sticky-bottom">
     {#if canResetPassword}
       <Button color="light-red" fullwidth on:click={() => (isShowResetPasswordConfirmation = true)}
-        >Reset password</Button
+        >{$t('reset_password')}</Button
       >
     {/if}
-    <Button type="submit" fullwidth form="edit-user-form">Confirm</Button>
+    <Button type="submit" fullwidth form="edit-user-form">{$t('confirm')}</Button>
   </svelte:fragment>
 </FullScreenModal>
 
 {#if isShowResetPasswordConfirmation}
   <ConfirmDialogue
     id="reset-password-modal"
-    title="Reset password"
-    confirmText="Reset"
+    title={$t('reset_password')}
+    confirmText={$t('reset')}
     onConfirm={resetPassword}
     onClose={() => (isShowResetPasswordConfirmation = false)}
   >

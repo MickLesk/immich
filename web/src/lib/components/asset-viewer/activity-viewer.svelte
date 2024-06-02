@@ -26,6 +26,7 @@
   import UserAvatar from '../shared-components/user-avatar.svelte';
   import { locale } from '$lib/stores/preferences.store';
   import { shortcut } from '$lib/actions/shortcut';
+  import { t } from 'svelte-i18n';
 
   const units: Intl.RelativeTimeFormatUnit[] = ['year', 'month', 'week', 'day', 'hour', 'minute', 'second'];
 
@@ -92,7 +93,7 @@
     try {
       reactions = await getActivities({ assetId, albumId });
     } catch (error) {
-      handleError(error, 'Error when fetching reactions');
+      handleError(error, $t('error_when_fetching_reactions'));
     }
   };
 
@@ -141,7 +142,7 @@
       // Re-render the activity feed
       reactions = reactions;
     } catch (error) {
-      handleError(error, "Can't add your comment");
+      handleError(error, $t('cant_add_your_comment'));
     } finally {
       clearTimeout(timeout);
     }
@@ -160,9 +161,9 @@
       bind:clientHeight={activityHeight}
     >
       <div class="flex place-items-center gap-2">
-        <CircleIconButton on:click={() => dispatch('close')} icon={mdiClose} title="Close" />
+        <CircleIconButton on:click={() => dispatch('close')} icon={mdiClose} title={$t('close')} />
 
-        <p class="text-lg text-immich-fg dark:text-immich-dark-fg">Activity</p>
+        <p class="text-lg text-immich-fg dark:text-immich-dark-fg">{$t('activity')}</p>
       </div>
     </div>
     {#if innerHeight}
@@ -191,7 +192,7 @@
                 <div class="flex items-start w-fit pt-[5px]">
                   <CircleIconButton
                     icon={mdiDotsVertical}
-                    title="Comment options"
+                    title={$t('comment_options')}
                     size="16"
                     on:click={() => (showDeleteReaction[index] ? '' : showOptionsMenu(index))}
                   />
@@ -244,7 +245,7 @@
                   <div class="flex items-start w-fit">
                     <CircleIconButton
                       icon={mdiDotsVertical}
-                      title="Reaction options"
+                      title={$t('reaction_options')}
                       size="16"
                       on:click={() => (showDeleteReaction[index] ? '' : showOptionsMenu(index))}
                     />
@@ -292,7 +293,7 @@
               bind:this={textArea}
               bind:value={message}
               use:autoGrowHeight={'5px'}
-              placeholder={disabled ? 'Comments are disabled' : 'Say something'}
+              placeholder={disabled ? $t('comments_are_disabled') : $t('say_something')}
               on:input={() => autoGrowHeight(textArea, '5px')}
               use:shortcut={{
                 shortcut: { key: 'Enter' },
@@ -311,7 +312,12 @@
             </div>
           {:else if message}
             <div class="flex items-end w-fit ml-0">
-              <CircleIconButton title="Send message" size="15" icon={mdiSend} class="dark:text-immich-dark-gray" />
+              <CircleIconButton
+                title={$t('send_message')}
+                size="15"
+                icon={mdiSend}
+                class="dark:text-immich-dark-gray"
+              />
             </div>
           {/if}
         </form>

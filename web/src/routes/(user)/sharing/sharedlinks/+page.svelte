@@ -15,6 +15,7 @@
   import { getAllSharedLinks, removeSharedLink, type SharedLinkResponseDto } from '@immich/sdk';
   import { mdiArrowLeft } from '@mdi/js';
   import { onMount } from 'svelte';
+  import { t } from 'svelte-i18n';
 
   let sharedLinks: SharedLinkResponseDto[] = [];
   let editSharedLink: SharedLinkResponseDto | null = null;
@@ -36,7 +37,7 @@
 
     try {
       await removeSharedLink({ id: deleteLinkId });
-      notificationController.show({ message: 'Deleted shared link', type: NotificationType.Info });
+      notificationController.show({ message: $t('deleted_shared_link'), type: NotificationType.Info });
       deleteLinkId = null;
       await refresh();
     } catch (error) {
@@ -55,12 +56,12 @@
 </script>
 
 <ControlAppBar backIcon={mdiArrowLeft} on:close={() => goto(AppRoute.SHARING)}>
-  <svelte:fragment slot="leading">Shared links</svelte:fragment>
+  <svelte:fragment slot="leading">{$t('shared_links')}</svelte:fragment>
 </ControlAppBar>
 
 <section class="mt-[120px] flex flex-col pb-[120px]">
   <div class="m-auto mb-4 w-[50%] dark:text-immich-gray">
-    <p>Manage shared links</p>
+    <p>{$t('manage_shared_links')}</p>
   </div>
   {#if sharedLinks.length === 0}
     <div
@@ -89,9 +90,9 @@
 {#if deleteLinkId}
   <ConfirmDialogue
     id="delete-shared-link-modal"
-    title="Delete shared link"
+    title={$t('delete_shared_link')}
     prompt="Are you sure you want to delete this shared link?"
-    confirmText="Delete"
+    confirmText={$t('delete')}
     onConfirm={() => handleDeleteLink()}
     onClose={() => (deleteLinkId = null)}
   />

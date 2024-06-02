@@ -33,6 +33,7 @@
   } from '$lib/stores/preferences.store';
   import { goto } from '$app/navigation';
   import { AppRoute } from '$lib/constants';
+  import { t } from 'svelte-i18n';
 
   export let ownedAlbums: AlbumResponseDto[] = [];
   export let sharedAlbums: AlbumResponseDto[] = [];
@@ -55,8 +56,8 @@
     [AlbumGroupBy.None]: (order, albums): AlbumGroup[] => {
       return [
         {
-          id: 'Albums',
-          name: 'Albums',
+          id: $t('albums'),
+          name: $t('albums'),
           albums,
         },
       ];
@@ -64,7 +65,7 @@
 
     /** Group by year */
     [AlbumGroupBy.Year]: (order, albums): AlbumGroup[] => {
-      const unknownYear = 'Unknown Year';
+      const unknownYear = $t('unknown_year');
       const useStartDate = userSettings.sortBy === AlbumSortBy.OldestPhoto;
 
       const groupedByYear = groupBy(albums, (album) => {
@@ -111,7 +112,7 @@
 
       return sortedByOwnerNames.map(([ownerId, albums]) => ({
         id: ownerId,
-        name: ownerId === currentUserId ? 'My albums' : albums[0].owner.name,
+        name: ownerId === currentUserId ? $t('my_albums') : albums[0].owner.name,
         albums,
       }));
     },
@@ -293,7 +294,7 @@
       await handleDeleteAlbum(albumToDelete);
     } catch {
       notificationController.show({
-        message: 'Error deleting album',
+        message: $t('error_deleting_album'),
         type: NotificationType.Error,
       });
     } finally {
@@ -315,7 +316,7 @@
     albumToEdit = null;
 
     notificationController.show({
-      message: 'Album info updated',
+      message: $t('album_info_updated'),
       type: NotificationType.Info,
       button: {
         text: 'View Album',
@@ -461,8 +462,8 @@
   {#if albumToDelete}
     <ConfirmDialogue
       id="delete-album-dialogue-modal"
-      title="Delete album"
-      confirmText="Delete"
+      title={$t('delete_album')}
+      confirmText={$t('delete')}
       onConfirm={deleteSelectedAlbum}
       onClose={() => (albumToDelete = null)}
     >

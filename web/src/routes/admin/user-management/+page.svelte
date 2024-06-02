@@ -48,7 +48,7 @@
       allUsers = allUsers.filter((user) => user.id !== userId);
       notificationController.show({
         type: NotificationType.Info,
-        message: $t('page.admin.user_managerment.user_delete_success', { values: { email: user.email } }),
+        message: `User ${user.email} has been successfully removed.`,
       });
     }
   };
@@ -156,8 +156,8 @@
       {#if shouldShowPasswordResetSuccess}
         <ConfirmDialogue
           id="password-reset-success-modal"
-          title="Password reset success"
-          confirmText="Done"
+          title={$t('password_reset_success')}
+          confirmText={$t('done')}
           onConfirm={() => (shouldShowPasswordResetSuccess = false)}
           onClose={() => (shouldShowPasswordResetSuccess = false)}
           hideCancelButton={true}
@@ -165,7 +165,7 @@
         >
           <svelte:fragment slot="prompt">
             <div class="flex flex-col gap-4">
-              <p>{$t('page.admin.user_managerment.user_reset_password_success')}:</p>
+              <p>The user's password has been reset:</p>
 
               <div class="flex justify-center gap-2">
                 <code
@@ -173,10 +173,7 @@
                 >
                   {newPassword}
                 </code>
-                <LinkButton
-                  on:click={() => copyToClipboard(newPassword)}
-                  title={$t('page.admin.user_managerment.password_copy')}
-                >
+                <LinkButton on:click={() => copyToClipboard(newPassword)} title={$t('copy_password')}>
                   <div class="flex place-items-center gap-2 text-sm">
                     <Icon path={mdiContentCopy} size="18" />
                   </div>
@@ -184,7 +181,8 @@
               </div>
 
               <p>
-                {$t('page.admin.user_managerment.temporary_password_info')}
+                Please provide the temporary password to the user and inform them they will need to change the password
+                at their next login.
               </p>
             </div>
           </svelte:fragment>
@@ -197,13 +195,11 @@
         >
           <tr class="flex w-full place-items-center">
             <th class="w-8/12 sm:w-5/12 lg:w-6/12 xl:w-4/12 2xl:w-5/12 text-center text-sm font-medium"
-              >{$t('common.email')}</th
+              >{$t('email')}</th
             >
-            <th class="hidden sm:block w-3/12 text-center text-sm font-medium">{$t('common.name')}</th>
-            <th class="hidden xl:block w-3/12 2xl:w-2/12 text-center text-sm font-medium"
-              >{$t('page.admin.user_management.quota')}</th
-            >
-            <th class="w-4/12 lg:w-3/12 xl:w-2/12 text-center text-sm font-medium">{$t('common.action')}</th>
+            <th class="hidden sm:block w-3/12 text-center text-sm font-medium">{$t('name')}</th>
+            <th class="hidden xl:block w-3/12 2xl:w-2/12 text-center text-sm font-medium">{$t('has_quota')}</th>
+            <th class="w-4/12 lg:w-3/12 xl:w-2/12 text-center text-sm font-medium">{$t('action')}</th>
           </tr>
         </thead>
         <tbody class="block w-full overflow-y-auto rounded-md border dark:border-immich-dark-gray">
@@ -235,7 +231,7 @@
                   {#if !immichUser.deletedAt}
                     <CircleIconButton
                       icon={mdiPencilOutline}
-                      title={$t('page.admin.user_management.user_edit')}
+                      title={$t('edit_user')}
                       color="primary"
                       size="16"
                       on:click={() => editUserHandler(immichUser)}
@@ -243,7 +239,7 @@
                     {#if immichUser.id !== $user.id}
                       <CircleIconButton
                         icon={mdiTrashCanOutline}
-                        title={$t('page.admin.user_management.user_delete')}
+                        title={$t('delete_user')}
                         color="primary"
                         size="16"
                         on:click={() => deleteUserHandler(immichUser)}
@@ -253,11 +249,7 @@
                   {#if immichUser.deletedAt && immichUser.status === UserStatus.Deleted}
                     <CircleIconButton
                       icon={mdiDeleteRestore}
-                      title={$t('page.admin.user_management.user_restore', {
-                        values: {
-                          delete_date: getDeleteDate(immichUser.deletedAt),
-                        },
-                      })}
+                      title="Restore user - scheduled removal on {getDeleteDate(immichUser.deletedAt)}"
                       color="primary"
                       size="16"
                       on:click={() => restoreUserHandler(immichUser)}
@@ -270,9 +262,7 @@
         </tbody>
       </table>
 
-      <Button size="sm" on:click={() => (shouldShowCreateUserForm = true)}
-        >{$t('page.admin.user_management.user_create')}</Button
-      >
+      <Button size="sm" on:click={() => (shouldShowCreateUserForm = true)}>{$t('create_user')}</Button>
     </section>
   </section>
 </UserPageLayout>

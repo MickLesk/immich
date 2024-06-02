@@ -7,6 +7,7 @@
   import SettingButtonsRow from '$lib/components/shared-components/settings/setting-buttons-row.svelte';
   import SettingSwitch from '$lib/components/shared-components/settings/setting-switch.svelte';
   import SettingSelect from '$lib/components/shared-components/settings/setting-select.svelte';
+  import { t } from 'svelte-i18n';
 
   export let savedConfig: SystemConfigDto;
   export let defaultConfig: SystemConfigDto;
@@ -22,13 +23,13 @@
       <div class="ml-4 mt-4 flex flex-col gap-4">
         <SettingSwitch
           id="enable-logging"
-          title="ENABLED"
+          title={$t('enabled')}
           {disabled}
-          subtitle="Logging"
+          subtitle={$t('logging')}
           bind:checked={config.logging.enabled}
         />
         <SettingSelect
-          label="LEVEL"
+          label={$t('level')}
           desc="When enabled, what log level to use."
           bind:value={config.logging.level}
           options={[

@@ -78,7 +78,7 @@
       });
       dispatch('merge', mergedPerson);
     } catch (error) {
-      handleError(error, 'Cannot merge people');
+      handleError(error, { $t("cannot_merge_people") });
     } finally {
       isShowConfirmation = false;
     }
@@ -134,7 +134,7 @@
                 {#if selectedPeople.length === 1}
                   <div class="absolute bottom-2">
                     <CircleIconButton
-                      title="Swap merge direction"
+                      title={ $t("swap_merge_direction") }
                       icon={mdiSwapHorizontal}
                       size="24"
                       on:click={handleSwapPeople}
@@ -154,8 +154,8 @@
     {#if isShowConfirmation}
       <ConfirmDialogue
         id="merge-people-modal"
-        title="Merge people"
-        confirmText="Merge"
+        title={ $t("merge_people") }
+        confirmText={ $t("merge") }
         onConfirm={handleMerge}
         onClose={() => (isShowConfirmation = false)}
       >

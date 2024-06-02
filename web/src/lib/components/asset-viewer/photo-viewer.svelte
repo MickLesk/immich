@@ -15,6 +15,7 @@
   import { NotificationType, notificationController } from '../shared-components/notification/notification';
   import { getAltText } from '$lib/utils/thumbnail-util';
   import { SlideshowLook, slideshowLookCssMapping, SlideshowState, slideshowStore } from '$lib/stores/slideshow.store';
+  import { t } from 'svelte-i18n';
 
   const { slideshowState, slideshowLook } = slideshowStore;
 
@@ -91,7 +92,7 @@
       await copyImageToClipboard(assetFileUrl);
       notificationController.show({
         type: NotificationType.Info,
-        message: 'Copied image to clipboard.',
+        message: $t('copied_image_to_clipboard'),
         timeout: 3000,
       });
     } catch (error) {
@@ -121,7 +122,7 @@
   });
 
   const onCopyShortcut = (event: KeyboardEvent) => {
-    if (window.getSelection()?.type === 'Range') {
+    if (window.getSelection()?.type === $t('range')) {
       return;
     }
     event.preventDefault();
@@ -138,7 +139,7 @@
   ]}
 />
 {#if imageError}
-  <div class="h-full flex items-center justify-center">Error loading image</div>
+  <div class="h-full flex items-center justify-center">{$t('error_loading_image')}</div>
 {/if}
 <div bind:this={element} class="relative h-full select-none">
   <img

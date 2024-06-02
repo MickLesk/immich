@@ -7,6 +7,7 @@
   import { mdiTimerSand, mdiDeleteOutline } from '@mdi/js';
   import { type OnDelete, deleteAssets } from '$lib/utils/actions';
   import DeleteAssetDialog from '../delete-asset-dialog.svelte';
+  import { t } from 'svelte-i18n';
 
   export let onAssetDelete: OnDelete;
   export let menuItem = false;
@@ -21,7 +22,7 @@
   let isShowConfirmation = false;
   let loading = false;
 
-  $: label = force ? 'Permanently delete' : 'Delete';
+  $: label = force ? $t('permanently_delete') : $t('delete');
 
   const handleTrash = async () => {
     if (force) {
@@ -50,7 +51,7 @@
 {#if menuItem}
   <MenuOption text={label} icon={mdiDeleteOutline} on:click={handleTrash} />
 {:else if loading}
-  <CircleIconButton title="Loading" icon={mdiTimerSand} />
+  <CircleIconButton title={$t('loading')} icon={mdiTimerSand} />
 {:else}
   <CircleIconButton title={label} icon={mdiDeleteOutline} on:click={handleTrash} />
 {/if}

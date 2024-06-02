@@ -9,6 +9,7 @@
   import SettingSelect from '$lib/components/shared-components/settings/setting-select.svelte';
   import SettingSwitch from '$lib/components/shared-components/settings/setting-switch.svelte';
   import DateInput from '../elements/date-input.svelte';
+  import { t } from 'svelte-i18n';
 
   export let settings: MapSettings;
   let customDateRange = !!settings.dateAfter || !!settings.dateBefore;
@@ -21,25 +22,29 @@
   const handleClose = () => dispatch('close');
 </script>
 
-<FullScreenModal id="map-settings-modal" title="Map settings" onClose={handleClose}>
+<FullScreenModal id="map-settings-modal" title={$t('map_settings')} onClose={handleClose}>
   <form
     on:submit|preventDefault={() => dispatch('save', settings)}
     class="flex flex-col gap-4 text-immich-primary dark:text-immich-dark-primary"
     id="map-settings-form"
   >
-    <SettingSwitch id="allow-dark-mode" title="Allow dark mode" bind:checked={settings.allowDarkMode} />
-    <SettingSwitch id="only-favorites" title="Only favorites" bind:checked={settings.onlyFavorites} />
-    <SettingSwitch id="include-archived" title="Include archived" bind:checked={settings.includeArchived} />
+    <SettingSwitch id="allow-dark-mode" title={$t('allow_dark_mode')} bind:checked={settings.allowDarkMode} />
+    <SettingSwitch id="only-favorites" title={$t('only_favorites')} bind:checked={settings.onlyFavorites} />
+    <SettingSwitch id="include-archived" title={$t('include_archived')} bind:checked={settings.includeArchived} />
     <SettingSwitch
       id="include-shared-partner-assets"
-      title="Include shared partner assets"
+      title={$t('include_shared_partner_assets')}
       bind:checked={settings.withPartners}
     />
-    <SettingSwitch id="include-shared-albums" title="Include shared albums" bind:checked={settings.withSharedAlbums} />
+    <SettingSwitch
+      id="include-shared-albums"
+      title={$t('include_shared_albums')}
+      bind:checked={settings.withSharedAlbums}
+    />
     {#if customDateRange}
       <div in:fly={{ y: 10, duration: 200 }} class="flex flex-col gap-4">
         <div class="flex items-center justify-between gap-8">
-          <label class="immich-form-label shrink-0 text-sm" for="date-after">Date after</label>
+          <label class="immich-form-label shrink-0 text-sm" for="date-after">{$t('date_after')}</label>
           <DateInput
             class="immich-form-input w-40"
             type="date"
@@ -49,7 +54,7 @@
           />
         </div>
         <div class="flex items-center justify-between gap-8">
-          <label class="immich-form-label shrink-0 text-sm" for="date-before">Date before</label>
+          <label class="immich-form-label shrink-0 text-sm" for="date-before">{$t('date_before')}</label>
           <DateInput class="immich-form-input w-40" type="date" id="date-before" bind:value={settings.dateBefore} />
         </div>
         <div class="flex justify-center text-xs">
@@ -67,7 +72,7 @@
     {:else}
       <div in:fly={{ y: -10, duration: 200 }} class="flex flex-col gap-1">
         <SettingSelect
-          label="Date range"
+          label={$t('date_range')}
           name="date-range"
           bind:value={settings.relativeDate}
           options={[
@@ -111,7 +116,7 @@
     {/if}
   </form>
   <svelte:fragment slot="sticky-bottom">
-    <Button color="gray" size="sm" fullwidth on:click={handleClose}>Cancel</Button>
-    <Button type="submit" size="sm" fullwidth form="map-settings-form">Save</Button>
+    <Button color="gray" size="sm" fullwidth on:click={handleClose}>{$t('cancel')}</Button>
+    <Button type="submit" size="sm" fullwidth form="map-settings-form">{$t('save')}</Button>
   </svelte:fragment>
 </FullScreenModal>

@@ -10,6 +10,7 @@
   } from '$lib/components/shared-components/settings/setting-input-field.svelte';
   import SettingSwitch from '$lib/components/shared-components/settings/setting-switch.svelte';
   import SettingButtonsRow from '$lib/components/shared-components/settings/setting-buttons-row.svelte';
+  import { t } from 'svelte-i18n';
 
   export let savedConfig: SystemConfigDto;
   export let defaultConfig: SystemConfigDto;
@@ -17,7 +18,7 @@
   export let disabled = false;
 
   const cronExpressionOptions = [
-    { title: 'Every night at midnight', expression: '0 0 * * *' },
+    { title: $t('every_night_at_midnight'), expression: '0 0 * * *' },
     { title: 'Every night at 2am', expression: '0 2 * * *' },
     { title: 'Every day at 1pm', expression: '0 13 * * *' },
     { title: 'Every 6 hours', expression: '0 */6 * * *' },
@@ -30,7 +31,7 @@
   <div in:fade={{ duration: 500 }}>
     <SettingAccordion
       key="library-watching"
-      title="Library watching (EXPERIMENTAL)"
+      title={$t('library_watching_(experimental)')}
       subtitle="Automatically watch for changed files"
       isOpen
     >
@@ -38,7 +39,7 @@
         <div class="ml-4 mt-4 flex flex-col gap-4">
           <SettingSwitch
             id="watch-filesystem"
-            title="Watch filesystem"
+            title={$t('watch_filesystem')}
             {disabled}
             subtitle="Watch external libraries for file changes"
             bind:checked={config.library.watch.enabled}
@@ -58,22 +59,22 @@
 
     <SettingAccordion
       key="library-scanning"
-      title="Periodic Scanning"
-      subtitle="Configure periodic library scanning"
+      title={$t('periodic_scanning')}
+      subtitle={$t('configure_periodic_library_scanning')}
       isOpen
     >
       <form autocomplete="off" on:submit|preventDefault>
         <div class="ml-4 mt-4 flex flex-col gap-4">
           <SettingSwitch
             id="periodic-library-scan"
-            title="ENABLED"
+            title={$t('enabled')}
             {disabled}
-            subtitle="Enable periodic library scanning"
+            subtitle={$t('enable_periodic_library_scanning')}
             bind:checked={config.library.scan.enabled}
           />
 
           <div class="flex flex-col my-2 dark:text-immich-dark-fg">
-            <label class="text-sm" for="expression-select">Cron Expression Presets</label>
+            <label class="text-sm" for="expression-select">{$t('cron_expression_presets')}</label>
             <select
               class="p-2 mt-2 text-sm rounded-lg bg-slate-200 hover:cursor-pointer dark:bg-gray-600"
               disabled={disabled || !config.library.scan.enabled}
@@ -91,7 +92,7 @@
             inputType={SettingInputFieldType.TEXT}
             required={true}
             disabled={disabled || !config.library.scan.enabled}
-            label="Cron Expression"
+            label={$t('cron_expression')}
             bind:value={config.library.scan.cronExpression}
             isEdited={config.library.scan.cronExpression !== savedConfig.library.scan.cronExpression}
           >
@@ -101,7 +102,7 @@
                   href="https://crontab.guru"
                   class="underline"
                   target="_blank"
-                  rel="noreferrer">Crontab Guru</a
+                  rel="noreferrer">{$t('crontab_guru')}</a
                 >
               </p>
             </svelte:fragment>

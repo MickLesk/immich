@@ -3,6 +3,7 @@
   import { updateAlbumInfo } from '@immich/sdk';
   import { handleError } from '$lib/utils/handle-error';
   import { shortcut } from '$lib/actions/shortcut';
+  import { t } from 'svelte-i18n';
 
   export let id: string;
   export let description: string;
@@ -23,7 +24,7 @@
         },
       });
     } catch (error) {
-      handleError(error, 'Error updating album description');
+      handleError(error, $t('error_updating_album_description'));
       return;
     }
     description = newDescription;
@@ -37,7 +38,7 @@
     on:input={(e) => autoGrowHeight(e.currentTarget)}
     on:focusout={handleUpdateDescription}
     use:autoGrowHeight
-    placeholder="Add a description"
+    placeholder={$t('add_a_description')}
     use:shortcut={{
       shortcut: { key: 'Enter', ctrl: true },
       onShortcut: (e) => e.currentTarget.blur(),

@@ -13,6 +13,7 @@
   import AvatarSelector from './avatar-selector.svelte';
   import FocusTrap from '$lib/components/shared-components/focus-trap.svelte';
   import CircleIconButton from '$lib/components/elements/buttons/circle-icon-button.svelte';
+  import { t } from 'svelte-i18n';
 
   let isShowSelectAvatar = false;
 
@@ -38,11 +39,11 @@
       isShowSelectAvatar = false;
 
       notificationController.show({
-        message: 'Saved profile',
+        message: $t('saved_profile'),
         type: NotificationType.Info,
       });
     } catch (error) {
-      handleError(error, 'Unable to save profile');
+      handleError(error, $t('unable_to_save_profile'));
     }
   };
 </script>
@@ -65,7 +66,7 @@
           <CircleIconButton
             color="primary"
             icon={mdiPencil}
-            title="Edit avatar"
+            title={$t('edit_avatar')}
             class="border"
             size="12"
             padding="2"

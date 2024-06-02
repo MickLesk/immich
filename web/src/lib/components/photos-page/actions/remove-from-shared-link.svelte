@@ -7,6 +7,7 @@
   import ConfirmDialogue from '../../shared-components/confirm-dialogue.svelte';
   import { NotificationType, notificationController } from '../../shared-components/notification/notification';
   import { getAssetControlContext } from '../asset-select-control-bar.svelte';
+  import { t } from 'svelte-i18n';
 
   export let sharedLink: SharedLinkResponseDto;
 
@@ -46,14 +47,14 @@
   };
 </script>
 
-<CircleIconButton title="Remove from shared link" on:click={() => (removing = true)} icon={mdiDeleteOutline} />
+<CircleIconButton title={$t('remove_from_shared_link')} on:click={() => (removing = true)} icon={mdiDeleteOutline} />
 
 {#if removing}
   <ConfirmDialogue
     id="remove-assets-modal"
     title="Remove assets?"
     prompt="Are you sure you want to remove {getAssets().size} asset(s) from this shared link?"
-    confirmText="Remove"
+    confirmText={$t('remove')}
     onConfirm={() => handleRemove()}
     onClose={() => (removing = false)}
   />

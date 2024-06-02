@@ -24,6 +24,7 @@
   import { mdiDeleteOutline, mdiHistory } from '@mdi/js';
   import type { PageData } from './$types';
   import { handlePromiseError } from '$lib/utils';
+  import { t } from 'svelte-i18n';
 
   export let data: PageData;
 
@@ -48,7 +49,7 @@
         type: NotificationType.Info,
       });
     } catch (error) {
-      handleError(error, 'Error emptying trash');
+      handleError(error, $t('error_emptying_trash'));
     }
   };
 
@@ -65,7 +66,7 @@
         type: NotificationType.Info,
       });
     } catch (error) {
-      handleError(error, 'Error restoring trash');
+      handleError(error, $t('error_restoring_trash'));
     }
   };
 </script>
@@ -107,8 +108,8 @@
 {#if isShowEmptyConfirmation}
   <ConfirmDialogue
     id="empty-trash-modal"
-    title="Empty trash"
-    confirmText="Empty"
+    title={$t('empty_trash')}
+    confirmText={$t('empty')}
     onConfirm={handleEmptyTrash}
     onClose={() => (isShowEmptyConfirmation = false)}
   >

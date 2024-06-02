@@ -9,6 +9,7 @@
     SettingInputFieldType,
   } from '$lib/components/shared-components/settings/setting-input-field.svelte';
   import SettingButtonsRow from '$lib/components/shared-components/settings/setting-buttons-row.svelte';
+  import { t } from 'svelte-i18n';
 
   export let savedConfig: SystemConfigDto;
   export let defaultConfig: SystemConfigDto;
@@ -24,9 +25,9 @@
       <div class="ml-4 mt-4 flex flex-col gap-4">
         <SettingSwitch
           id="enable-trash-features"
-          title="ENABLED"
+          title={$t('enabled')}
           {disabled}
-          subtitle="Enable Trash features"
+          subtitle={$t('enable_trash_features')}
           bind:checked={config.trash.enabled}
         />
 
@@ -34,7 +35,7 @@
 
         <SettingInputField
           inputType={SettingInputFieldType.NUMBER}
-          label="Number of days"
+          label={$t('number_of_days')}
           desc="Number of days to keep the assets in trash before permanently removing them"
           bind:value={config.trash.days}
           required={true}

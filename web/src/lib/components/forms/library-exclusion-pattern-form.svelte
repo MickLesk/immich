@@ -4,11 +4,12 @@
   import FullScreenModal from '../shared-components/full-screen-modal.svelte';
   import { mdiFolderRemove } from '@mdi/js';
   import { onMount } from 'svelte';
+  import { t } from 'svelte-i18n';
 
   export let exclusionPattern: string;
   export let exclusionPatterns: string[] = [];
   export let isEditing = false;
-  export let submitText = 'Submit';
+  export let submitText = $t('submit');
 
   onMount(() => {
     if (isEditing) {
@@ -30,7 +31,7 @@
 
 <FullScreenModal
   id="add-exclusion-pattern-modal"
-  title="Add exclusion pattern"
+  title={$t('add_exclusion_pattern')}
   icon={mdiFolderRemove}
   onClose={handleCancel}
 >
@@ -39,11 +40,13 @@
       Exclusion patterns lets you ignore files and folders when scanning your library. This is useful if you have
       folders that contain files you don't want to import, such as RAW files.
       <br /><br />
-      Add exclusion patterns. Globbing using *, **, and ? is supported. To ignore all files in any directory named "Raw",
-      use "**/Raw/**". To ignore all files ending in ".tif", use "**/*.tif". To ignore an absolute path, use "/path/to/ignore/**".
+      Add exclusion patterns. Globbing using *, **, and ? is supported. To ignore all files in any directory named {$t(
+        'raw',
+      )}, use "**/Raw/**". To ignore all files ending in ".tif", use "**/*.tif". To ignore an absolute path, use
+      "/path/to/ignore/**".
     </p>
     <div class="my-4 flex flex-col gap-2">
-      <label class="immich-form-label" for="exclusionPattern">Pattern</label>
+      <label class="immich-form-label" for="exclusionPattern">{$t('pattern')}</label>
       <input
         class="immich-form-input"
         id="exclusionPattern"
@@ -59,9 +62,9 @@
     </div>
   </form>
   <svelte:fragment slot="sticky-bottom">
-    <Button color="gray" fullwidth on:click={() => handleCancel()}>Cancel</Button>
+    <Button color="gray" fullwidth on:click={() => handleCancel()}>{$t('cancel')}</Button>
     {#if isEditing}
-      <Button color="red" fullwidth on:click={() => dispatch('delete')}>Delete</Button>
+      <Button color="red" fullwidth on:click={() => dispatch('delete')}>{$t('delete')}</Button>
     {/if}
     <Button type="submit" disabled={!canSubmit} fullwidth form="add-exclusion-pattern-form">{submitText}</Button>
   </svelte:fragment>

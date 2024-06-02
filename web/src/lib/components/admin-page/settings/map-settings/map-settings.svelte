@@ -10,6 +10,7 @@
   import SettingInputField, {
     SettingInputFieldType,
   } from '$lib/components/shared-components/settings/setting-input-field.svelte';
+  import { t } from 'svelte-i18n';
 
   export let savedConfig: SystemConfigDto;
   export let defaultConfig: SystemConfigDto;
@@ -23,13 +24,13 @@
   <div in:fade={{ duration: 500 }}>
     <form autocomplete="off" on:submit|preventDefault>
       <div class="flex flex-col gap-4">
-        <SettingAccordion key="map" title="Map Settings" subtitle="Manage map settings">
+        <SettingAccordion key="map" title={$t('map_settings')} subtitle={$t('manage_map_settings')}>
           <div class="ml-4 mt-4 flex flex-col gap-4">
             <SettingSwitch
               id="enable-map-features"
-              title="ENABLED"
+              title={$t('enabled')}
               {disabled}
-              subtitle="Enable map features"
+              subtitle={$t('enable_map_features')}
               bind:checked={config.map.enabled}
             />
 
@@ -37,7 +38,7 @@
 
             <SettingInputField
               inputType={SettingInputFieldType.TEXT}
-              label="Light Style"
+              label={$t('light_style')}
               desc="URL to a style.json map theme"
               bind:value={config.map.lightStyle}
               disabled={disabled || !config.map.enabled}
@@ -45,7 +46,7 @@
             />
             <SettingInputField
               inputType={SettingInputFieldType.TEXT}
-              label="Dark Style"
+              label={$t('dark_style')}
               desc="URL to a style.json map theme"
               bind:value={config.map.darkStyle}
               disabled={disabled || !config.map.enabled}
@@ -54,23 +55,23 @@
           </div></SettingAccordion
         >
 
-        <SettingAccordion key="reverse-geocoding" title="Reverse Geocoding Settings">
+        <SettingAccordion key="reverse-geocoding" title={$t('reverse_geocoding_settings')}>
           <svelte:fragment slot="subtitle">
             <p class="text-sm dark:text-immich-dark-fg">
               Manage <a
                 href="https://immich.app/docs/features/reverse-geocoding"
                 class="underline"
                 target="_blank"
-                rel="noreferrer">Reverse Geocoding</a
+                rel="noreferrer">{$t('reverse_geocoding')}</a
               > settings
             </p>
           </svelte:fragment>
           <div class="ml-4 mt-4 flex flex-col gap-4">
             <SettingSwitch
               id="enable-reverse-geocoding"
-              title="ENABLED"
+              title={$t('enabled')}
               {disabled}
-              subtitle="Enable reverse geocoding"
+              subtitle={$t('enable_reverse_geocoding')}
               bind:checked={config.reverseGeocoding.enabled}
             />
           </div></SettingAccordion

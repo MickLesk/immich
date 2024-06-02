@@ -5,6 +5,7 @@
   import { serverConfig } from '$lib/stores/server-config.store';
   import { createEventDispatcher } from 'svelte';
   import Checkbox from '$lib/components/elements/checkbox.svelte';
+  import { t } from 'svelte-i18n';
 
   export let user: UserResponseDto;
 
@@ -31,7 +32,7 @@
         dispatch('success');
       }
     } catch (error) {
-      handleError(error, 'Unable to delete user');
+      handleError(error, $t('unable_to_delete_user'));
       dispatch('fail');
     }
   };
@@ -44,8 +45,8 @@
 
 <ConfirmDialogue
   id="delete-user-confirmation-modal"
-  title="Delete user"
-  confirmText={forceDelete ? 'Permanently Delete' : 'Delete'}
+  title={$t('delete_user')}
+  confirmText={forceDelete ? $t('permanently_delete') : $t('delete')}
   onConfirm={handleDeleteUser}
   onClose={() => dispatch('cancel')}
   disabled={deleteButtonDisabled}

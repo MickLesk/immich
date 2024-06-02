@@ -19,6 +19,7 @@
   import { clickOutside } from '$lib/actions/click-outside';
   import { focusOutside } from '$lib/actions/focus-outside';
   import CircleIconButton from '$lib/components/elements/buttons/circle-icon-button.svelte';
+  import { t } from 'svelte-i18n';
 
   /**
    * Unique identifier for the combobox.
@@ -199,7 +200,7 @@
       class:pointer-events-none={!selectedOption}
     >
       {#if selectedOption}
-        <CircleIconButton on:click={onClear} title="Clear value" icon={mdiClose} size="16" padding="2" />
+        <CircleIconButton on:click={onClear} title={$t('clear_value')} icon={mdiClose} size="16" padding="2" />
       {:else if !isOpen}
         <Icon path={mdiUnfoldMoreHorizontal} ariaHidden={true} />
       {/if}
