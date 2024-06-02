@@ -22,7 +22,7 @@
       <div class="ml-4 mt-4">
         <SettingSwitch
           id="enable-new-version-check"
-          title={$t('enabled')}
+          title={$t('enabled').toUpperCase()}
           subtitle="Enable periodic requests to GitHub to check for new releases"
           bind:checked={config.newVersionCheck.enabled}
           {disabled}

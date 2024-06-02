@@ -19,14 +19,14 @@
   let error: string;
   let success: string;
   let isShowResetPasswordConfirmation = false;
-  let quotaSize = user.quotaSizeInBytes ? convertFromBytes(user.quotaSizeInBytes, $t('gib')) : null;
+  let quotaSize = user.quotaSizeInBytes ? convertFromBytes(user.quotaSizeInBytes, 'GiB') : null;
 
   const previousQutoa = user.quotaSizeInBytes;
 
   $: quotaSizeWarning =
-    previousQutoa !== convertToBytes(Number(quotaSize), $t('gib')) &&
+    previousQutoa !== convertToBytes(Number(quotaSize), 'GiB') &&
     !!quotaSize &&
-    convertToBytes(Number(quotaSize), $t('gib')) > $serverInfo.diskSizeRaw;
+    convertToBytes(Number(quotaSize), 'GiB') > $serverInfo.diskSizeRaw;
 
   const dispatch = createEventDispatcher<{
     close: void;
@@ -43,7 +43,7 @@
           email,
           name,
           storageLabel: storageLabel || '',
-          quotaSizeInBytes: quotaSize ? convertToBytes(Number(quotaSize), $t('gib')) : null,
+          quotaSizeInBytes: quotaSize ? convertToBytes(Number(quotaSize), 'GiB') : null,
         },
       });
 
@@ -77,8 +77,7 @@
   function generatePassword(length: number = 16) {
     let generatedPassword = '';
 
-    const characterSet =
-      '0123456789' + 'abcdefghijklmnopqrstuvwxyz' + $t('abcdefghijklmnopqrstuvwxyz') + ',.-{}+!#$%/()=?';
+    const characterSet = '0123456789' + 'abcdefghijklmnopqrstuvwxyz' + 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' + ',.-{}+!#$%/()=?';
 
     for (let i = 0; i < length; i++) {
       let randomNumber = crypto.getRandomValues(new Uint32Array(1))[0];

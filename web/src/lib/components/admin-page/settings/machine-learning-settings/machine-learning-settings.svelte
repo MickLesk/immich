@@ -28,7 +28,7 @@
       <div class="flex flex-col gap-4">
         <SettingSwitch
           id="enable-machine-learning"
-          title={$t('enabled')}
+          title={$t('enabled').toUpperCase()}
           subtitle="If disabled, all ML features will be disabled regardless of the below settings."
           {disabled}
           bind:checked={config.machineLearning.enabled}
@@ -38,7 +38,7 @@
 
         <SettingInputField
           inputType={SettingInputFieldType.TEXT}
-          label={$t('url')}
+          label={$t('url').toUpperCase()}
           desc="URL of the machine learning server"
           bind:value={config.machineLearning.url}
           required={true}
@@ -55,7 +55,7 @@
         <div class="ml-4 mt-4 flex flex-col gap-4">
           <SettingSwitch
             id="enable-clip"
-            title={$t('enabled')}
+            title={$t('enabled').toUpperCase()}
             subtitle="If disabled, images will not be encoded for smart search."
             bind:checked={config.machineLearning.clip.enabled}
             disabled={disabled || !config.machineLearning.enabled}
@@ -65,7 +65,7 @@
 
           <SettingInputField
             inputType={SettingInputFieldType.TEXT}
-            label={$t('clip_model')}
+            label={$t('clip_model').toUpperCase()}
             bind:value={config.machineLearning.clip.modelName}
             required={true}
             disabled={disabled || !config.machineLearning.enabled || !config.machineLearning.clip.enabled}
@@ -73,7 +73,7 @@
           >
             <p slot="desc" class="immich-form-label pb-2 text-sm">
               The name of a CLIP model listed <a href="https://huggingface.co/immich-app"><u>here</u></a>. Note that you
-              must re-run the {$t('smart_search')} job for all images upon changing a model.
+              must re-run the 'Smart Search' job for all images upon changing a model.
             </p>
           </SettingInputField>
         </div>
@@ -87,7 +87,7 @@
         <div class="ml-4 mt-4 flex flex-col gap-4">
           <SettingSwitch
             id="enable-duplicate-detection"
-            title={$t('enabled')}
+            title={$t('enabled').toUpperCase()}
             subtitle="If disabled, exactly identical assets will still be de-duplicated."
             bind:checked={config.machineLearning.duplicateDetection.enabled}
             disabled={disabled || !config.machineLearning.enabled || !config.machineLearning.clip.enabled}
@@ -97,7 +97,7 @@
 
           <SettingInputField
             inputType={SettingInputFieldType.NUMBER}
-            label={$t('max_detection_distance')}
+            label={$t('max_detection_distance').toUpperCase()}
             bind:value={config.machineLearning.duplicateDetection.maxDistance}
             step="0.01"
             min={0.001}
@@ -118,7 +118,7 @@
         <div class="ml-4 mt-4 flex flex-col gap-4">
           <SettingSwitch
             id="enable-facial-recognition"
-            title={$t('enabled')}
+            title={$t('enabled').toUpperCase()}
             subtitle="If disabled, images will not be encoded for facial recognition and will not populate the People section in the Explore page."
             bind:checked={config.machineLearning.facialRecognition.enabled}
             disabled={disabled || !config.machineLearning.enabled}
@@ -127,7 +127,7 @@
           <hr />
 
           <SettingSelect
-            label={$t('facial_recognition_model')}
+            label={$t('facial_recognition_model').toUpperCase()}
             desc="Models are listed in descending order of size. Larger models are slower and use more memory, but produce better results. Note that you must re-run the Face Detection job for all images upon changing a model."
             name="facial-recognition-model"
             bind:value={config.machineLearning.facialRecognition.modelName}
@@ -144,7 +144,7 @@
 
           <SettingInputField
             inputType={SettingInputFieldType.NUMBER}
-            label={$t('min_detection_score')}
+            label={$t('min_detection_score').toUpperCase()}
             desc="Minimum confidence score for a face to be detected from 0-1. Lower values will detect more faces but may result in false positives."
             bind:value={config.machineLearning.facialRecognition.minScore}
             step="0.1"
@@ -157,7 +157,7 @@
 
           <SettingInputField
             inputType={SettingInputFieldType.NUMBER}
-            label={$t('max_recognition_distance')}
+            label={$t('max_recognition_distance').toUpperCase()}
             desc="Maximum distance between two faces to be considered the same person, ranging from 0-2. Lowering this can prevent labeling two people as the same person, while raising it can prevent labeling the same person as two different people. Note that it is easier to merge two people than to split one person in two, so err on the side of a lower threshold when possible."
             bind:value={config.machineLearning.facialRecognition.maxDistance}
             step="0.1"
@@ -170,7 +170,7 @@
 
           <SettingInputField
             inputType={SettingInputFieldType.NUMBER}
-            label={$t('min_recognized_faces')}
+            label={$t('min_recognized_faces').toUpperCase()}
             desc="The minimum number of recognized faces for a person to be created. Increasing this makes Facial Recognition more precise at the cost of increasing the chance that a face is not assigned to a person."
             bind:value={config.machineLearning.facialRecognition.minFaces}
             step="1"

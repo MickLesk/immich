@@ -23,13 +23,13 @@
       <div class="ml-4 mt-4 flex flex-col gap-4">
         <SettingSwitch
           id="enable-logging"
-          title={$t('enabled')}
+          title={$t('enabled').toUpperCase()}
           {disabled}
           subtitle={$t('logging')}
           bind:checked={config.logging.enabled}
         />
         <SettingSelect
-          label={$t('level')}
+          label={$t('level').toUpperCase()}
           desc="When enabled, what log level to use."
           bind:value={config.logging.level}
           options={[

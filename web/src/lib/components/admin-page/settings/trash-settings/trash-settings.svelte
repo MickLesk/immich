@@ -25,7 +25,7 @@
       <div class="ml-4 mt-4 flex flex-col gap-4">
         <SettingSwitch
           id="enable-trash-features"
-          title={$t('enabled')}
+          title={$t('enabled').toUpperCase()}
           {disabled}
           subtitle={$t('enable_trash_features')}
           bind:checked={config.trash.enabled}
